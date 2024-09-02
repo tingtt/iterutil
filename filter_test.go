@@ -55,4 +55,33 @@ func TestFilter(t *testing.T) {
 		mock.AssertNumberOfCalls(t, "Func", len(list))
 		mock2.AssertNumberOfCalls(t, "Func", 1)
 	})
+
+	t.Run("may filter", func(t *testing.T) {
+		t.Parallel()
+
+		list := []string{"a", "b", "c"}
+		mock := new(Mock)
+		mock.On("Func")
+
+		iter := func() iter.Seq[string] {
+			return func(yield func(string) bool) {
+				for _, v := range list {
+					mock.Func()
+					if !yield(v) {
+						break
+					}
+				}
+			}
+		}()
+
+		mock2 := new(Mock)
+		mock2.On("Func")
+		for range iterutil.Filter(iter, "a") {
+			mock2.Func()
+			break
+		}
+
+		mock.AssertNumberOfCalls(t, "Func", 1)
+		mock2.AssertNumberOfCalls(t, "Func", 1)
+	})
 }
