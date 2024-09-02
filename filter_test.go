@@ -28,7 +28,7 @@ func TestFilter(t *testing.T) {
 		}
 	})
 
-	t.Run("may filter", func(t *testing.T) {
+	t.Run("may filter and continue yield", func(t *testing.T) {
 		t.Parallel()
 
 		list := []string{"a", "b", "c"}
@@ -56,7 +56,7 @@ func TestFilter(t *testing.T) {
 		mock2.AssertNumberOfCalls(t, "Func", 1)
 	})
 
-	t.Run("may filter", func(t *testing.T) {
+	t.Run("may filter and break yield", func(t *testing.T) {
 		t.Parallel()
 
 		list := []string{"a", "b", "c"}
