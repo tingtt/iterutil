@@ -10,20 +10,15 @@ go get github.com/tingtt/iterutil
 import "github.com/tingtt/iterutil"
 ```
 
-- Only
+- Filter
   ```go
-  for item := range iterutil.Only(slices.Values([]string{"a", "b", "c"}), "a") {
+  for item := range iterutil.Filter(slices.Values([]int{1, 2, 3, 4, 5}), 3) {
     fmt.Println(item)
+    break
   }
   // will print:
-  // a
+  // 3
   ```
-- OnlyFunc
-- OnlyKey
-- OnlyKeyFunc
-- OnlyValue
-- OnlyValueFunc
-- Filter
 - FilterFunc
   ```go
   filterLargerThanOrEqual := func(i int) func(v int) bool {
